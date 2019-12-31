@@ -1,19 +1,21 @@
-import Axios, { AxiosInstance } from 'axios';
+//import Axios, { AxiosInstance } from 'axios';
 import { SalesmanListItem } from './types';
+import { Cerber } from '../service/Cerber';
 
 export class OwnerApi {
-  private api: AxiosInstance;
+  private _token: string;
 
-  constructor(baseUrl: string, token: string) {
-    this.api = Axios.create({
-      baseURL: `${baseUrl}`,
-      headers: {
-        authorization: `bearer ${token}`
-      }
-    });
+  constructor(token: string) {
+    this._token = token;
   }
 
-  public getList() {
-    return this.api.get<SalesmanListItem[]>('/api/owner/salesman/list');
-  }
+  public getList = async (): Promise<SalesmanListItem[]> => {
+    const result = await Cerber.getInstance().callProxy('/api/owner/salesman/list', '', 'get', this._token);
+
+    if (result && result.length > 0) {
+      return JSON.parse(result) as SalesmanListItem[];
+    }
+
+    return [];
+  };
 }

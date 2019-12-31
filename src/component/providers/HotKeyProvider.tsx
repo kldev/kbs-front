@@ -3,13 +3,15 @@ import { MapDispatchToProps, connect } from 'react-redux';
 import { toggleFilter } from 'store/nav/actions';
 
 interface DispatchProps {
-  toggleFilter?: () => void;
+  toggleFilter: () => void;
 }
 
 class HotKeyProvider extends React.Component<DispatchProps> {
-  static mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = {
-    toggleFilter
-  };
+  static mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = dispatch => ({
+    toggleFilter: () => {
+      dispatch(toggleFilter());
+    }
+  });
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
@@ -32,7 +34,4 @@ class HotKeyProvider extends React.Component<DispatchProps> {
   }
 }
 
-export default connect<{}, DispatchProps>(
-  null,
-  HotKeyProvider.mapDispatchToProps
-)(HotKeyProvider);
+export default connect<{}, DispatchProps>(null, HotKeyProvider.mapDispatchToProps)(HotKeyProvider);

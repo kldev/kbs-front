@@ -1,4 +1,3 @@
-import { Urls } from 'constant/Urls';
 import { OwnerApi } from 'api/OwnerApi';
 
 import { ThunkAction } from 'redux-thunk';
@@ -9,15 +8,8 @@ import { Action } from 'redux';
 export type thunkResult = ThunkAction<void, AppState, null, Action>;
 
 export const getList = (): thunkResult => async (dispatch, state) => {
-  const ownerApi = new OwnerApi(Urls.BaseUrl, state().app.token);
+  const ownerApi = new OwnerApi(state().app.token);
 
-  try {
-    const list = await ownerApi.getList();
-
-    if (list.status === 200) {
-      dispatch(listSuccess(list.data));
-      return;
-    }
-  } catch {}
-  dispatch(listSuccess([]));
+  const list = await ownerApi.getList();
+  dispatch(listSuccess(list));
 };

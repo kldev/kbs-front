@@ -12,7 +12,7 @@ import * as userPanelsActions from 'store/userPanel/actions';
 
 import { Paths } from 'constant/Paths';
 
-import { SalesmanList } from 'views/owner/SalesmanList';
+import { SalesmanList } from 'views/owner/salesmanModule/SalesmanList';
 
 import { AppNav } from './AppNav';
 import { UserPanels } from '../userPanels/UserPanels';
@@ -42,6 +42,7 @@ const contentStackStyles: IStackStyles = {
     minHeight: '400px',
     paddingLeft: '20px',
     paddingRight: '20px',
+    paddingTop: '5px',
     boxSizing: 'border-box'
   }
 };
@@ -204,6 +205,7 @@ class LayoutPure extends React.Component<Props, State> {
           backgroundColor: '#eee',
           fontSize: 22,
           marginLeft: 20,
+          paddingTop: '5px',
           padding: 0
         },
         rootHovered: {
@@ -234,7 +236,7 @@ class LayoutPure extends React.Component<Props, State> {
         <Stack verticalFill styles={containerStackStyles}>
           <CommandBar items={outerCommandBarItems} farItems={farCommandBarItems} styles={outerCommandBarStyles} />
 
-          <Stack horizontal>
+          <Stack horizontal verticalFill>
             {navVisible && <AppNav role={role as string} />}
             <Stack grow verticalFill styles={contentStackStyles}>
               <Switch>
